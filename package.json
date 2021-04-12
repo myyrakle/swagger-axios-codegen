@@ -1,5 +1,5 @@
 {
-  "name": "swagger-axios-codegen",
+  "name": "@myyrakle/swagger-axios-codegen",
   "version": "0.11.16",
   "main": "./dist/index",
   "typings": "./dist/",
