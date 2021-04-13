@@ -1,0 +1,533 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "테스트",
+    "description": "테스트용 문서입니다.",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    { "name": "foo", "description": "" },
+    { "name": "cms", "description": "관리자 API입니다." },
+    { "name": "user", "description": "사용자 API입니다." },
+    { "name": "cdn", "description": "cdn 처리할 공개 API입니다." }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "Response": {
+        "type": "object",
+        "properties": {
+          "foo": {
+            "type": "string",
+            "description": "그냥 텍스트",
+            "example": "으악"
+          },
+          "bar": {
+            "type": "string",
+            "description": "그냥 텍스트2",
+            "example": "으악"
+          }
+        },
+        "required": ["foo", "bar"]
+      },
+      "GetUserResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "메세지",
+            "example": "success"
+          },
+          "user_id": {
+            "type": "number",
+            "description": "유저 식별자",
+            "example": 12
+          },
+          "name": {
+            "type": "string",
+            "description": "이름",
+            "example": "김파라오"
+          },
+          "age": { "type": "number", "description": "나이", "example": 23 }
+        },
+        "required": ["success", "message", "user_id", "name", "age"]
+      },
+      "PutUserParameter": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "number",
+            "description": "유저 식별자",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "이름",
+            "example": "김파라오"
+          },
+          "age": { "type": "number", "description": "나이", "example": 23 }
+        },
+        "required": ["user_id", "name", "age"]
+      },
+      "PutUserResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "메세지",
+            "example": "success"
+          }
+        },
+        "required": ["success", "message"]
+      },
+      "PostUserParameter": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "이름",
+            "example": "김파라오"
+          },
+          "age": { "type": "number", "description": "나이", "example": 23 }
+        },
+        "required": ["name", "age"]
+      },
+      "PostUserResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "메세지",
+            "example": "success"
+          },
+          "user_id": {
+            "type": "number",
+            "description": "유저 식별자",
+            "example": 1
+          }
+        },
+        "required": ["success", "message", "user_id"]
+      },
+      "DeleteUserResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "메세지",
+            "example": "success"
+          }
+        },
+        "required": ["success", "message"]
+      },
+      "GetPostResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "메세지",
+            "example": "success"
+          },
+          "post_id": {
+            "type": "number",
+            "description": "유저 식별자",
+            "example": 12
+          },
+          "title": {
+            "type": "string",
+            "description": "제목",
+            "example": "게시글 제목입니다."
+          },
+          "content": {
+            "type": "string",
+            "description": "내용",
+            "example": "게시글 내용입니다."
+          }
+        },
+        "required": ["success", "message", "post_id", "title", "content"]
+      },
+      "PutPostParameter": {
+        "type": "object",
+        "properties": {
+          "post_id": {
+            "type": "number",
+            "description": "유저 식별자",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "description": "제목",
+            "example": "김파라오"
+          },
+          "content": {
+            "type": "number",
+            "description": "내용",
+            "example": "23"
+          }
+        },
+        "required": ["post_id", "title", "content"]
+      },
+      "PutPostResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "메세지",
+            "example": "success"
+          }
+        },
+        "required": ["success", "message"]
+      },
+      "PostParameter": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "제목",
+            "example": "김파라오"
+          },
+          "content": {
+            "type": "number",
+            "description": "내용",
+            "example": "23"
+          }
+        },
+        "required": ["name", "content"]
+      },
+      "PostPostResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "메세지",
+            "example": "success"
+          },
+          "post_id": {
+            "type": "number",
+            "description": "유저 식별자",
+            "example": 1
+          }
+        },
+        "required": ["success", "message", "post_id"]
+      },
+      "DeletePostResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "메세지",
+            "example": "success"
+          }
+        },
+        "required": ["success", "message"]
+      },
+      "UserCountResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "메세지",
+            "example": "success"
+          },
+          "user_count": {
+            "type": "number",
+            "description": "유저 수",
+            "example": 12
+          }
+        },
+        "required": ["success", "message", "user_count"]
+      }
+    }
+  },
+  "paths": {
+    "/select-user": {
+      "get": {
+        "operationId": "AppController_select",
+        "parameters": [
+          {
+            "name": "foo",
+            "required": true,
+            "in": "query",
+            "description": "그냥 텍스트",
+            "example": "으악",
+            "schema": { "format": "double", "type": "string" }
+          },
+          {
+            "name": "bar",
+            "required": false,
+            "in": "query",
+            "description": "그냥 텍스트2",
+            "example": "으악",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "테스트 api요",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Response" }
+              }
+            }
+          }
+        },
+        "tags": ["foo"]
+      }
+    },
+    "/cms/user": {
+      "get": {
+        "operationId": "CmsUserController_getOne",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "query",
+            "description": "유저 식별자",
+            "example": 1,
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "사용자 정보 조회",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GetUserResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["cms"]
+      },
+      "put": {
+        "operationId": "CmsUserController_updateOne",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PutUserParameter" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "사용자 정보 수정",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PutUserResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["cms"]
+      },
+      "post": {
+        "operationId": "CmsUserController_createOne",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PostUserParameter" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "사용자 정보 수정",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PostUserResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["cms"]
+      },
+      "delete": {
+        "operationId": "CmsUserController_deleteOne",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "query",
+            "description": "유저 식별자",
+            "example": 1,
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "사용자 정보 수정",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DeleteUserResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["cms"]
+      }
+    },
+    "/user/post": {
+      "get": {
+        "operationId": "UserPostController_getOne",
+        "parameters": [
+          {
+            "name": "post_id",
+            "required": true,
+            "in": "query",
+            "description": "포스트 식별자",
+            "example": 1,
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "게시글 정보 조회",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GetPostResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["user"]
+      },
+      "put": {
+        "operationId": "UserPostController_updateOne",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PutPostParameter" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "게시글 정보 수정",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PutPostResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["user"]
+      },
+      "post": {
+        "operationId": "UserPostController_createOne",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PostParameter" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "게시글 정보 수정",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PostPostResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["user"]
+      },
+      "delete": {
+        "operationId": "UserPostController_deleteOne",
+        "parameters": [
+          {
+            "name": "post_id",
+            "required": true,
+            "in": "query",
+            "description": "유저 식별자",
+            "example": 1,
+            "schema": { "type": "number" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "게시글 정보 수정",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DeletePostResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["user"]
+      }
+    },
+    "/cdn/user-count": {
+      "get": {
+        "operationId": "CdnController_getOne",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "게시글 정보 조회",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserCountResponse" }
+              }
+            }
+          }
+        },
+        "tags": ["cdn"]
+      }
+    }
+  },
+  "basePath": "http://localhost:3000/prod/v1"
+}

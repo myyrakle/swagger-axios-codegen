@@ -88,9 +88,19 @@ export function customerServiceHeader(options: ISwaggerOptions) {
 function requestHeader() {
   return `
 
-  // Add default options
+  // 기본 Axios 객체
+  const { Api } = import '@psyrenpark/api';
   export const serviceOptions: ServiceOptions = {
+    axios: Api,
   };
+
+  const projectName = "eradmin";
+  const projectEnv = "prod";
+
+  const v1Api = \`\${projectName}-\${projectEnv}-api-v1\`;
+  const v1Cdn = \`\${projectName}-\${projectEnv}-cdn-v1\`;
+  const v1NoneAuth = \`\${projectName}-\${projectEnv}-noneauth-v1\`;
+  const v1Cms = \`\${projectName}-\${projectEnv}-cms-v1\`;
 
   // Instance selector
   export function axios(configs: IRequestConfig, resolve: (p: any) => void, reject: (p: any) => void): Promise<any> {
