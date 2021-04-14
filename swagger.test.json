@@ -305,6 +305,14 @@
             "example": "으악",
             "schema": { "type": "string" }
           }
+          ,{
+            "name": "test",
+            "required": true,
+            "in": "path",
+            "description": "그냥 텍스트",
+            "example": "으악",
+            "schema": { "format": "double", "type": "string" }
+          }
         ],
         "responses": {
           "200": {

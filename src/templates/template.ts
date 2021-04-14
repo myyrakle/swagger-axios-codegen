@@ -214,16 +214,22 @@ export function requestTemplate(name: string, requestSchema: IRequestSchema, opt
  */
 ${options.useStaticMethod ? 'static' : ''} ${camelcase(
     name
-  )}(${parameters}options:IRequestOptions={}):Promise<${responseType}> {
+  )}(${parameters}options:IRequestOptions={}, loadingCallback?: any):Promise<${responseType}> {
   return new Promise((resolve, reject) => {
-    let url = basePath+'${path}'
+    const path = '${path}';
+    let url = basePath + path;
     ${pathReplace}
     ${parsedParameters && headerParameters && headerParameters.length > 0
       ? `options.headers = {${headerParameters}, ...options.headers }`
       : ''}
-    const configs:IRequestConfig = getConfigs('${method}', '${contentType}', url, options)
-    ${parsedParameters && queryParameters.length > 0 ? 'configs.params = {' + queryParameters.join(',') + '}' : ''}
-    let data = ${parsedParameters && bodyParameter && bodyParameter.length > 0
+  
+    const myInit = {
+      queryStringParameters: {},
+      body: {},
+      headers: {},
+    };
+    ${parsedParameters && queryParameters.length > 0 ? 'myInit.queryStringParameters = {' + queryParameters.join(',') + '}' : ''}
+    myInit.body = ${parsedParameters && bodyParameter && bodyParameter.length > 0
       ? // ? bodyParameters.length === 1 && bodyParameters[0].startsWith('[') ? bodyParameters[0] : '{' + bodyParameters.join(',') + '}'
       bodyParameter
       : !!requestBody
@@ -231,8 +237,11 @@ ${options.useStaticMethod ? 'static' : ''} ${camelcase(
         : 'null'
     }
     ${contentType === 'multipart/form-data' ? formData : ''}
-    configs.data = data;
-    axios(configs, ${resolveString}, reject);
+    myInit.headers = {};
+
+    const apiName = pathToApiName(path);
+
+    serviceOptions.axios.${method}(apiName, url, myInit, loadingCallback);
   });
 }`
 }

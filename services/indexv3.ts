@@ -19,43 +19,15 @@ export interface IRequestConfig {
 }
 
 // Add options interface
-
-import { Api } from '@psyrenpark/api';
-
 export interface ServiceOptions {
   axios?: any;
 }
-// 기본 Axios 객체
 
+// 기본 Axios 객체
+import { Api } from '@psyrenpark/api';
 export const serviceOptions: ServiceOptions = {
   axios: Api
 };
-
-function pathToapiName(path: string): string {
-  const firstPath: string = path.split('/')[1];
-  let apiName = ''
-
-  switch(apiName) {
-    case 'api': {
-      apiName = v1Api
-      break;
-    }
-    case 'cdn': {
-      apiName = v1Cdn
-      break;
-    }
-    case 'noneauth': {
-      apiName = v1NoneAuth
-      break;
-    }
-    case 'cms': {
-      apiName = v1Cms
-      break;
-    }
-  }
-
-  return apiName;
-}
 
 const projectName = 'eradmin';
 const projectEnv = 'prod';
@@ -65,29 +37,30 @@ const v1Cdn = `${projectName}-${projectEnv}-cdn-v1`;
 const v1NoneAuth = `${projectName}-${projectEnv}-noneauth-v1`;
 const v1Cms = `${projectName}-${projectEnv}-cms-v1`;
 
-// Instance selector
-export function axios(configs: IRequestConfig, resolve: (p: any) => void, reject: (p: any) => void): Promise<any> {
-  if (serviceOptions.axios) {
-    return serviceOptions.axios
-      .request(configs)
-      .then(res => {
-        resolve(res.data);
-      })
-      .catch(err => {
-        reject(err);
-      });
-  } else {
-    throw new Error('please inject yourself instance like axios  ');
-  }
-}
+function pathToApiName(path: string): string {
+  const firstPath: string = path.split('/')[1];
+  let apiName = '';
 
-export function getConfigs(method: string, contentType: string, url: string, options: any): IRequestConfig {
-  const configs: IRequestConfig = { ...options, method, url };
-  configs.headers = {
-    ...options.headers,
-    'Content-Type': contentType
-  };
-  return configs;
+  switch (apiName) {
+    case 'api': {
+      apiName = v1Api;
+      break;
+    }
+    case 'cdn': {
+      apiName = v1Cdn;
+      break;
+    }
+    case 'noneauth': {
+      apiName = v1NoneAuth;
+      break;
+    }
+    case 'cms': {
+      apiName = v1Cms;
+      break;
+    }
+  }
+
+  return apiName;
 }
 
 const basePath = 'http://localhost:3000/prod/v1';
@@ -124,24 +97,36 @@ export class FooService {
   /**
    *
    */
-  static selectUser(
+  static appControllerSelect(
     params: {
       /** 그냥 텍스트 */
       foo: string;
       /** 그냥 텍스트2 */
       bar?: string;
+      /** 그냥 텍스트 */
+      test: string;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
+    loadingCallback?: any
   ): Promise<Response> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/select-user';
+      const path = '/select-user';
+      let url = basePath + path;
+      url = url.replace('{test}', params['test'] + '');
 
-      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
-      configs.params = { foo: params['foo'], bar: params['bar'] };
-      let data = null;
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
+      myInit.queryStringParameters = { foo: params['foo'], bar: params['bar'] };
+      myInit.body = null;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.get(apiName, url, myInit, loadingCallback);
     });
   }
 }
@@ -150,85 +135,121 @@ export class CmsService {
   /**
    *
    */
-  static user(
+  static cmsUserControllerGetOne(
     params: {
       /** 유저 식별자 */
       userId: number;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
+    loadingCallback?: any
   ): Promise<GetUserResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/cms/user';
+      const path = '/cms/user';
+      let url = basePath + path;
 
-      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
-      configs.params = { user_id: params['userId'] };
-      let data = null;
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
+      myInit.queryStringParameters = { user_id: params['userId'] };
+      myInit.body = null;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.get(apiName, url, myInit, loadingCallback);
     });
   }
   /**
    *
    */
-  static user1(
+  static cmsUserControllerUpdateOne(
     params: {
       /** requestBody */
       body?: PutUserParameter;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
+    loadingCallback?: any
   ): Promise<PutUserResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/cms/user';
+      const path = '/cms/user';
+      let url = basePath + path;
 
-      const configs: IRequestConfig = getConfigs('put', 'application/json', url, options);
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
 
-      let data = params.body;
+      myInit.body = params.body;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.put(apiName, url, myInit, loadingCallback);
     });
   }
   /**
    *
    */
-  static user2(
+  static cmsUserControllerCreateOne(
     params: {
       /** requestBody */
       body?: PostUserParameter;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
+    loadingCallback?: any
   ): Promise<PostUserResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/cms/user';
+      const path = '/cms/user';
+      let url = basePath + path;
 
-      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
 
-      let data = params.body;
+      myInit.body = params.body;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.post(apiName, url, myInit, loadingCallback);
     });
   }
   /**
    *
    */
-  static user3(
+  static cmsUserControllerDeleteOne(
     params: {
       /** 유저 식별자 */
       userId: number;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
+    loadingCallback?: any
   ): Promise<DeleteUserResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/cms/user';
+      const path = '/cms/user';
+      let url = basePath + path;
 
-      const configs: IRequestConfig = getConfigs('delete', 'application/json', url, options);
-      configs.params = { user_id: params['userId'] };
-      let data = null;
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
+      myInit.queryStringParameters = { user_id: params['userId'] };
+      myInit.body = null;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.delete(apiName, url, myInit, loadingCallback);
     });
   }
 }
@@ -237,85 +258,121 @@ export class UserService {
   /**
    *
    */
-  static post(
+  static userPostControllerGetOne(
     params: {
       /** 포스트 식별자 */
       postId: number;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
+    loadingCallback?: any
   ): Promise<GetPostResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/user/post';
+      const path = '/user/post';
+      let url = basePath + path;
 
-      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
-      configs.params = { post_id: params['postId'] };
-      let data = null;
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
+      myInit.queryStringParameters = { post_id: params['postId'] };
+      myInit.body = null;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.get(apiName, url, myInit, loadingCallback);
     });
   }
   /**
    *
    */
-  static post1(
+  static userPostControllerUpdateOne(
     params: {
       /** requestBody */
       body?: PutPostParameter;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
+    loadingCallback?: any
   ): Promise<PutPostResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/user/post';
+      const path = '/user/post';
+      let url = basePath + path;
 
-      const configs: IRequestConfig = getConfigs('put', 'application/json', url, options);
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
 
-      let data = params.body;
+      myInit.body = params.body;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.put(apiName, url, myInit, loadingCallback);
     });
   }
   /**
    *
    */
-  static post2(
+  static userPostControllerCreateOne(
     params: {
       /** requestBody */
       body?: PostParameter;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
+    loadingCallback?: any
   ): Promise<PostPostResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/user/post';
+      const path = '/user/post';
+      let url = basePath + path;
 
-      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
 
-      let data = params.body;
+      myInit.body = params.body;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.post(apiName, url, myInit, loadingCallback);
     });
   }
   /**
    *
    */
-  static post3(
+  static userPostControllerDeleteOne(
     params: {
       /** 유저 식별자 */
       postId: number;
     } = {} as any,
-    options: IRequestOptions = {}
+    options: IRequestOptions = {},
+    loadingCallback?: any
   ): Promise<DeletePostResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/user/post';
+      const path = '/user/post';
+      let url = basePath + path;
 
-      const configs: IRequestConfig = getConfigs('delete', 'application/json', url, options);
-      configs.params = { post_id: params['postId'] };
-      let data = null;
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
+      myInit.queryStringParameters = { post_id: params['postId'] };
+      myInit.body = null;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.delete(apiName, url, myInit, loadingCallback);
     });
   }
 }
@@ -324,16 +381,24 @@ export class CdnService {
   /**
    *
    */
-  static userCount(options: IRequestOptions = {}): Promise<UserCountResponse> {
+  static cdnControllerGetOne(options: IRequestOptions = {}, loadingCallback?: any): Promise<UserCountResponse> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/cdn/user-count';
+      const path = '/cdn/user-count';
+      let url = basePath + path;
 
-      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+      const myInit = {
+        queryStringParameters: {},
+        body: {},
+        headers: {}
+      };
 
-      let data = null;
+      myInit.body = null;
 
-      configs.data = data;
-      axios(configs, resolve, reject);
+      myInit.headers = {};
+
+      const apiName = pathToApiName(path);
+
+      serviceOptions.axios.get(apiName, url, myInit, loadingCallback);
     });
   }
 }
