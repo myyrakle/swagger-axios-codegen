@@ -77,7 +77,7 @@ export function customerServiceHeader(options: ISwaggerOptions) {
 
   // Add options interface
   export interface ServiceOptions {
-    axios?: IRequestInstance,
+    axios?: any,
   }
 
   ${requestHeader()}
@@ -89,7 +89,7 @@ function requestHeader() {
   return `
 
   // 기본 Axios 객체
-  const { Api } = import '@psyrenpark/api';
+  import { Api } from '@psyrenpark/api';
   export const serviceOptions: ServiceOptions = {
     axios: Api,
   };
@@ -101,6 +101,32 @@ function requestHeader() {
   const v1Cdn = \`\${projectName}-\${projectEnv}-cdn-v1\`;
   const v1NoneAuth = \`\${projectName}-\${projectEnv}-noneauth-v1\`;
   const v1Cms = \`\${projectName}-\${projectEnv}-cms-v1\`;
+
+  function pathToApiName(path: string): string {
+    const firstPath: string = path.split('/')[1];
+    let apiName = ''
+  
+    switch(apiName) {
+      case 'api': {
+        apiName = v1Api
+        break;
+      }
+      case 'cdn': {
+        apiName = v1Cdn
+        break;
+      }
+      case 'noneauth': {
+        apiName = v1NoneAuth
+        break;
+      }
+      case 'cms': {
+        apiName = v1Cms
+        break;
+      }
+    }
+  
+    return apiName;
+  }
 
   // Instance selector
   export function axios(configs: IRequestConfig, resolve: (p: any) => void, reject: (p: any) => void): Promise<any> {

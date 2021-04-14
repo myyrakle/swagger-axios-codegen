@@ -25,6 +25,7 @@
     "prepublish": "npm run build"
   },
   "dependencies": {
+    "@psyrenpark/api": "^1.0.43",
     "axios": "^0.21.1",
     "camelcase": "^5.0.0",
     "multimatch": "^4.0.0",

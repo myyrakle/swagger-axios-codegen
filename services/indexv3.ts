@@ -19,12 +19,51 @@ export interface IRequestConfig {
 }
 
 // Add options interface
+
+import { Api } from '@psyrenpark/api';
+
 export interface ServiceOptions {
-  axios?: AxiosInstance;
+  axios?: any;
+}
+// 기본 Axios 객체
+
+export const serviceOptions: ServiceOptions = {
+  axios: Api
+};
+
+function pathToapiName(path: string): string {
+  const firstPath: string = path.split('/')[1];
+  let apiName = ''
+
+  switch(apiName) {
+    case 'api': {
+      apiName = v1Api
+      break;
+    }
+    case 'cdn': {
+      apiName = v1Cdn
+      break;
+    }
+    case 'noneauth': {
+      apiName = v1NoneAuth
+      break;
+    }
+    case 'cms': {
+      apiName = v1Cms
+      break;
+    }
+  }
+
+  return apiName;
 }
 
-// Add default options
-export const serviceOptions: ServiceOptions = {};
+const projectName = 'eradmin';
+const projectEnv = 'prod';
+
+const v1Api = `${projectName}-${projectEnv}-api-v1`;
+const v1Cdn = `${projectName}-${projectEnv}-cdn-v1`;
+const v1NoneAuth = `${projectName}-${projectEnv}-noneauth-v1`;
+const v1Cms = `${projectName}-${projectEnv}-cms-v1`;
 
 // Instance selector
 export function axios(configs: IRequestConfig, resolve: (p: any) => void, reject: (p: any) => void): Promise<any> {
