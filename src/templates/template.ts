@@ -198,6 +198,10 @@ export function requestTemplate(name: string, requestSchema: IRequestSchema, opt
     formData = '',
     requestBody = null
   } = requestSchema
+
+  let camelName = camelcase(name);
+  let methodName = method+camelName.charAt(0).toUpperCase()+camelName.slice(1)
+
   const { useClassTransformer } = options
   const { queryParameters = [], bodyParameter = [], headerParameters } = parsedParameters
   const nonArrayType = responseType.replace('[', '').replace(']', '')
@@ -212,9 +216,7 @@ export function requestTemplate(name: string, requestSchema: IRequestSchema, opt
 /**
  * ${summary || ''}
  */
-${options.useStaticMethod ? 'static' : ''} ${camelcase(
-    name
-  )}(${parameters}options:IRequestOptions={}, loadingCallback?: any):Promise<${responseType}> {
+${options.useStaticMethod ? 'static' : ''} ${methodName}(${parameters}options:IRequestOptions={}, loadingCallback?: any):Promise<${responseType}> {
   return new Promise((resolve, reject) => {
     const path = '${path}';
     let url = basePath + path;

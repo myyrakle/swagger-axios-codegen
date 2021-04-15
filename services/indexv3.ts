@@ -97,7 +97,7 @@ export class FooService {
   /**
    *
    */
-  static appControllerSelect(
+  static getSelectUser(
     params: {
       /** 그냥 텍스트 */
       foo: string;
@@ -135,7 +135,7 @@ export class CmsService {
   /**
    *
    */
-  static cmsUserControllerGetOne(
+  static getUser(
     params: {
       /** 유저 식별자 */
       userId: number;
@@ -165,7 +165,7 @@ export class CmsService {
   /**
    *
    */
-  static cmsUserControllerUpdateOne(
+  static putUser1(
     params: {
       /** requestBody */
       body?: PutUserParameter;
@@ -195,7 +195,7 @@ export class CmsService {
   /**
    *
    */
-  static cmsUserControllerCreateOne(
+  static postUser2(
     params: {
       /** requestBody */
       body?: PostUserParameter;
@@ -225,7 +225,7 @@ export class CmsService {
   /**
    *
    */
-  static cmsUserControllerDeleteOne(
+  static deleteUser3(
     params: {
       /** 유저 식별자 */
       userId: number;
@@ -258,7 +258,7 @@ export class UserService {
   /**
    *
    */
-  static userPostControllerGetOne(
+  static getPost(
     params: {
       /** 포스트 식별자 */
       postId: number;
@@ -288,7 +288,7 @@ export class UserService {
   /**
    *
    */
-  static userPostControllerUpdateOne(
+  static putPost1(
     params: {
       /** requestBody */
       body?: PutPostParameter;
@@ -318,7 +318,7 @@ export class UserService {
   /**
    *
    */
-  static userPostControllerCreateOne(
+  static postPost2(
     params: {
       /** requestBody */
       body?: PostParameter;
@@ -348,7 +348,7 @@ export class UserService {
   /**
    *
    */
-  static userPostControllerDeleteOne(
+  static deletePost3(
     params: {
       /** 유저 식별자 */
       postId: number;
@@ -381,7 +381,7 @@ export class CdnService {
   /**
    *
    */
-  static cdnControllerGetOne(options: IRequestOptions = {}, loadingCallback?: any): Promise<UserCountResponse> {
+  static getUserCount(options: IRequestOptions = {}, loadingCallback?: any): Promise<UserCountResponse> {
     return new Promise((resolve, reject) => {
       const path = '/cdn/user-count';
       let url = basePath + path;
