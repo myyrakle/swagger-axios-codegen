@@ -165,7 +165,7 @@ export class CmsService {
   /**
    *
    */
-  static putUser1(
+  static putUser(
     params: {
       /** requestBody */
       body?: PutUserParameter;
@@ -195,7 +195,7 @@ export class CmsService {
   /**
    *
    */
-  static postUser2(
+  static postUser(
     params: {
       /** requestBody */
       body?: PostUserParameter;
@@ -225,7 +225,7 @@ export class CmsService {
   /**
    *
    */
-  static deleteUser3(
+  static deleteUser(
     params: {
       /** 유저 식별자 */
       userId: number;
@@ -288,7 +288,7 @@ export class UserService {
   /**
    *
    */
-  static putPost1(
+  static putPost(
     params: {
       /** requestBody */
       body?: PutPostParameter;
@@ -318,7 +318,7 @@ export class UserService {
   /**
    *
    */
-  static postPost2(
+  static postPost(
     params: {
       /** requestBody */
       body?: PostParameter;
@@ -348,7 +348,7 @@ export class UserService {
   /**
    *
    */
-  static deletePost3(
+  static deletePost(
     params: {
       /** 유저 식별자 */
       postId: number;

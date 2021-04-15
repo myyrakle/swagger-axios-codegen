@@ -117,10 +117,10 @@ export function requestCodegen(paths: IPaths, isV3: boolean, options: ISwaggerOp
         ).length
 
         // console.log(uniqueMethodName, methodCount)
-        if (methodCount >= 1) {
-          uniqueMethodName = uniqueMethodName + methodCount
-          // console.log(uniqueMethodName)
-        }
+        // if (methodCount >= 1) {
+        //   uniqueMethodName = uniqueMethodName + methodCount
+        //   // console.log(uniqueMethodName)
+        // }
         requestClasses[className].push({
           name: uniqueMethodName,
           operationId: uniqueMethodName,
