@@ -92,6 +92,14 @@ export async function codegen(params: ISwaggerOptions) {
     })
   }
 
+  // Object.keys(swaggerSource.paths).forEach(path => {
+  //   console.error('찍히나?')
+  //   const changedPath = '/' + (path.substring(1).replace('/', '-'))
+    
+  // })
+
+  
+
   let requestClass = requestCodegen(paths, isV3, options)
   // let requestClasses = Object.entries(requestCodegen(swaggerSource.paths, isV3, options))
 

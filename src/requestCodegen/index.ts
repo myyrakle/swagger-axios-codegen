@@ -23,7 +23,8 @@ export function requestCodegen(paths: IPaths, isV3: boolean, options: ISwaggerOp
   const requestClasses: IRequestClass = {}
 
   if (!!paths)
-    for (const [path, request] of Object.entries(paths)) {
+    for (let [path, request] of Object.entries(paths)) {
+      path = '/' + path.substring(1).replace('/', '-')
       let methodName = getMethodName(path)
       for (const [method, reqProps] of Object.entries(request)) {
         methodName =
