@@ -499,7 +499,8 @@ function codegenMultimatchInclude(
 
 function writeFile(fileDir: string, name: string, data: any) {
   
-  fileDir = "../"+ fileDir;
+  //보류
+  //fileDir = "../"+ fileDir;
 
   if (!fs.existsSync(fileDir)) {
     fs.mkdirSync(fileDir)
