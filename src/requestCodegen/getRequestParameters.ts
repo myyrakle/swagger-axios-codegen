@@ -42,6 +42,11 @@ export function getRequestParameters(params: IParameter[], useHeaderParameters: 
     let propType = ''
     // 引用类型定义
     if (p.schema) {
+
+      if(p.name == "page"){
+        p.schema.type =  'number';
+      }
+
       if (p.schema.items) {
         propType = refClassName(p.schema.items.$ref)
         if (p.schema.type && p.schema.type === 'array') {
@@ -51,6 +56,11 @@ export function getRequestParameters(params: IParameter[], useHeaderParameters: 
         propType = refClassName(p.schema.$ref)
         // console.log('propType', refClassName(p.schema.$ref))
       } else if (p.schema.type) {
+        
+        if(p.schema.type == "jsonStirng"){
+          p.schema.type =  'string';
+        }
+
         propType = toBaseType(p.schema.type)
       } else {
         throw new Error('Could not find property type on schema')
